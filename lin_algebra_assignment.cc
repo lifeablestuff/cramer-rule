@@ -45,10 +45,11 @@ Dmatrix Minor(const Dmatrix &Amat, const int col);
 //-------------------------------------------
 /*
  *TODO
- * Format input into matrix
- * display matrix
- * solve-x by cramer rule
+ * Format input into matrix                   |done|
+ * display matrix                             |done|
+ * solve-x by cramer rule                     
  * 2x2 determinant algo
+ * recursive determinant algo
  * insert b matrix
  * get minor function
  */
@@ -61,23 +62,66 @@ Dvector b,x;
 A=GetA();
 Display(A);
 b=Getb(A.size());
+Display(b);
+/*
 x=Solvex(A,b);
-Display(x);
 
+Display(x);
+*/
 return(0);
 }
 //-------------------------------------------
-
 Dmatrix GetA(){
-    string inp;
-    vector <vector <int>> matrix;
-    cout<<"Enter matrix ";
-    getline(inp);
-    size = inp[0];
-    for (auto i:inp){
-        
+    int width;
+    cin >> width;
+
+    Dmatrix bigMatrix;
+    int input;
+
+    for(int x = 0; x < width; x++){
+        Dvector temp;
+        for(int y = 0; y < width; y++){
+            cin >> input;
+            temp.push_back(input);
+        }
+        bigMatrix.push_back(temp);
+    }
     
-    return matrix;
+    return bigMatrix;
 }
 
+Dvector Getb(const int siz){
+    Dvector vec;
+    int inp;
+    for (int i=0;i<siz;i++){
+        cin>>inp;
+        vec.push_back(inp);
+    }
+    return vec;
+}
 
+void Display(const Dmatrix &Amat){
+    for (auto i:Amat){
+        for (auto x:i){
+            cout<<x<<" ";
+        }
+        cout<<endl;
+    }
+
+}
+
+void Display(const Dvector &xvect){
+    for (auto i:xvect){
+        cout<<i<<endl;
+    }
+    cout<<endl;
+}
+
+Dmatrix Replace(Dmatrix Rmat, const int col, const Dvector &bvect){
+    int size = Rmat.size();
+    
+    for (int i = 0; i<size;i++){
+        Rmat.at(col).at(i) = bvect.at(i);
+    }
+    return Rmat;
+}
