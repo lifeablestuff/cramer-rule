@@ -50,8 +50,8 @@ Dmatrix Minor(const Dmatrix &Amat, const int col);
  * solve-x by cramer rule                     
  * 2x2 determinant algo
  * recursive determinant algo
- * insert b matrix
- * get minor function
+ * insert b matrix 
+ * get minor function                         |done|
  */
 
 int main(){
@@ -125,3 +125,29 @@ Dmatrix Replace(Dmatrix Rmat, const int col, const Dvector &bvect){
     }
     return Rmat;
 }
+
+Dmatrix Minor(const Dmatrix &Amat, const int col){
+    Dmatrix minor;
+    int size = Amat.size();
+    for (int x = 0;x<size;x++){
+        if (x==0){
+            continue;
+        }
+        Dvector row;
+        for (int i = 0; i<size; i++){
+            if (i == col){
+                continue;
+            }
+            row.push_back(Amat.at(x).at(i));
+        }
+        minor.push_back(row);
+    }
+    return minor;
+}
+
+double Det(const Dmatrix &Amat){
+    if (Amat.size() == 2){
+        return Amat.at(0).at(0)*Amat.at(1).at(1)-Amat.at(0).at(1)*Amat.at(1).at(0);
+    }
+    else{
+        for 
