@@ -48,8 +48,8 @@ Dmatrix Minor(const Dmatrix &Amat, const int col);
  * Format input into matrix                   |done|
  * display matrix                             |done|
  * solve-x by cramer rule                     
- * 2x2 determinant algo
- * recursive determinant algo
+ * 2x2 determinant algo                       |done|
+ * recursive determinant algo                 |done|
  * insert b matrix 
  * get minor function                         |done|
  */
@@ -63,11 +63,12 @@ A=GetA();
 Display(A);
 b=Getb(A.size());
 Display(b);
-/*
+
 x=Solvex(A,b);
 
 Display(x);
-*/
+
+
 return(0);
 }
 //-------------------------------------------
@@ -121,7 +122,7 @@ Dmatrix Replace(Dmatrix Rmat, const int col, const Dvector &bvect){
     int size = Rmat.size();
     
     for (int i = 0; i<size;i++){
-        Rmat.at(col).at(i) = bvect.at(i);
+        Rmat.at(i).at(col) = bvect.at(i);
     }
     return Rmat;
 }
@@ -146,8 +147,33 @@ Dmatrix Minor(const Dmatrix &Amat, const int col){
 }
 
 double Det(const Dmatrix &Amat){
+    int total = 0;
     if (Amat.size() == 2){
         return Amat.at(0).at(0)*Amat.at(1).at(1)-Amat.at(0).at(1)*Amat.at(1).at(0);
     }
     else{
-        for 
+        for (uint x=0;x<Amat.size();x++){
+            total += pow(-1,x)*Amat.at(0).at(x)*(Det(Minor(Amat,x)));
+            
+        }
+    }
+    return total;
+}   
+
+Dvector Solvex(const Dmatrix &Amat, const Dvector &bvect){
+    int detvalue = 0, bigdet = 0;
+    Dvector solutions = {};
+    bigdet = Det(Amat);
+    Dmatrix current;
+    for (uint x = 0;x<Amat.size();x++){
+        current = Replace(Amat,x,bvect);
+        Display(current);
+        detvalue = Det(current);
+        detvalue = detvalue/bigdet;
+        solutions.push_back(detvalue);
+        detvalue = 0;
+    }
+    return solutions;
+}
+        
+        
