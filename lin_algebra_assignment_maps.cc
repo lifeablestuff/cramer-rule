@@ -155,16 +155,16 @@ double Det(const Dmatrix &Amat){
     else{
         for (uint x=0;x<Amat.size();x++){
             auto matrix=Detcache.find(Amat);
-            if (Detcache.find(Amat) != Amat.end()){
-                total += x->second;
+            if (Detcache.find(Amat) != Detcache.end()){
+                total += matrix->second;
             }
-        }
             else{
-                Detcache[Amat]=pow(-1,x)*Amat.at(0).at(::x)*(Det(Minor(Amat,::x)));
+                Detcache[Amat]=pow(-1,x)*Amat.at(0).at(x)*(Det(Minor(Amat,x)));
         }       total += Detcache[Amat];
     }
     return total;
-}   
+}
+}
 
 Dvector Solvex(const Dmatrix &Amat, const Dvector &bvect){
     int detvalue = 0, bigdet = 0;
@@ -181,5 +181,3 @@ Dvector Solvex(const Dmatrix &Amat, const Dvector &bvect){
     }
     return solutions;
 }
-        
-
